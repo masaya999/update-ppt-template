@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Dict Viewer</title>
+</head>
+<body>
+    <h1>Python Dict Viewer</h1>
+    <form method="POST" action="/update">
+        {% for key, value in data.items() %}
+        <label>{{ key }}</label>
+        <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
+        {% endfor %}
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
