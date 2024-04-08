@@ -14,6 +14,12 @@
         <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
         {% endfor %}
         <button type="submit">Update</button>
+        {% if filename %}
+    <div>
+        <h2>ファイルのダウンロード</h2>
+        <p><a href="{{ url_for('download_file', filename=filename) }}">こちらをクリックしてダウンロード</a></p>
+    </div>
+    {% endif %}
     </form>
 </body>
 </html>
