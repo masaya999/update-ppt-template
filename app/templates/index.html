@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Dict Viewer</title>
+    <title>Document Customizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Python Dict Viewer</h1>
+    <h1>Document Customizer</h1>
     <form method="POST" action="/update">
         {% for key, value in data.items() %}
         <label>{{ key }}</label>
