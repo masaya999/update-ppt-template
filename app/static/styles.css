@@ -38,7 +38,7 @@ button:hover {
     background-color: #666;
 }
 
-.scrollable_sction {
+.scrollable_section {
     height: 300px;
     overflow-y: auto;
 }

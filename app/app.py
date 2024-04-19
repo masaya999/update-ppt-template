@@ -8,7 +8,7 @@ from reportlab.pdfgen import canvas
 app = Flask(__name__)
 
 csv_path = '../data/extracted_data/saved_contents.csv'
-pptx_base_path = '../data/extracted_data/'
+pptx_base_path = '../data/pptx/'
 # CSVファイルを開いて読み込む
 df = pd.read_csv(csv_path, encoding='cp932', index_col=0)
 file_list = sorted(set(df['file_name']))
