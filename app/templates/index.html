@@ -10,7 +10,7 @@
     <h1>Document Customizer</h1>
     <form method="post">
         <label for="file_selector">Select a file:</label>
-        <select name="file_selector" id="file_selector">
+        <select name="file_selector" id="file_selector" onchange="loadPDF(this.value)">
             {% for file in files %}
             <option value="{{ file }}">{{ file }}</option>
             {% endfor %}
@@ -18,9 +18,20 @@
         <button type="submit">Load</button>
     </form>
     {% if selected_file %}
+    <div id="pdfViewer"></div>
+    <script>
+        function loadPDF(filename) {
+            var viewer = document.getElementById('pdfViewer');
+            if (filename) {
+                viewer.innerHTML = `<iframe src="/files/${filename.replace('.pptx', '.pdf')}" width="800" height="600" type="application/pdf"></iframe>`;
+            } else {
+                viewer.innerHTML = '';
+            }
+        }
+    </script>
     <div class="scrollable_section">
         <h3>CLIENT_INFO</h3>
-        <form method="POST" action="/update">
+        <form method="POST" action="/update/client">
             {% for key, value in client_info.items() %}
             <label>{{ key }}</label>
             <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
@@ -30,7 +41,7 @@
     </div>
     <div class="scrollable_section">
         <h3>PROPOSAL_INFO</h3>
-        <form method="POST" action="/update">
+        <form method="POST" action="/update/proposal">
             {% for key, value in proposal_info.items() %}
             <label>{{ key }}</label>
             <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
