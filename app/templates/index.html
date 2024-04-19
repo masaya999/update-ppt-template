@@ -8,18 +8,36 @@
 </head>
 <body>
     <h1>Document Customizer</h1>
-    <form method="POST" action="/update">
-        {% for key, value in data.items() %}
-        <label>{{ key }}</label>
-        <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
-        {% endfor %}
-        <button type="submit">Update</button>
-        {% if filename %}
-    <div>
-        <h2>ファイルのダウンロード</h2>
-        <p><a href="{{ url_for('download_file', filename=filename) }}">こちらをクリックしてダウンロード</a></p>
+    <form method="post">
+        <label for="file_selector">Select a file:</label>
+        <select name="file_selector" id="file_selector">
+            {% for file in files %}
+            <option value="{{ file }}">{{ file }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Load</button>
+    </form>
+    {% if selected_file %}
+    <div class="scrollable_section">
+        <h3>CLIENT_INFO</h3>
+        <form method="POST" action="/update">
+            {% for key, value in client_info.items() %}
+            <label>{{ key }}</label>
+            <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
+            {% endfor %}
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    <div class="scrollable_section">
+        <h3>PROPOSAL_INFO</h3>
+        <form method="POST" action="/update">
+            {% for key, value in proposal_info.items() %}
+            <label>{{ key }}</label>
+            <input type="text" name="{{ key }}" value="{{ value }}"><br><br>
+            {% endfor %}
+            <button type="submit">Update</button>
+        </form>
     </div>
     {% endif %}
-    </form>
 </body>
 </html>
