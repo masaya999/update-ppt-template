@@ -8,6 +8,7 @@ pandas = "*"
 flask = "*"
 python-pptx = "*"
 reportlab = "*"
+streamlit = "*"
 
 [dev-packages]
 
