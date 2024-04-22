@@ -19,14 +19,14 @@ def view_pdf(filename):
         pdf_url = f"data:application/pdf;base64,{b64_pdf}"
         st.markdown(f'<iframe src="{pdf_url}" width="800" height="450" type="application/pdf"></iframe>', unsafe_allow_html=True)
 
-def load_info(selected_pptx, info_level):
-    df_tmp = df[df['file_name'] == selected_pptx]
-    df_info_level = df_tmp[df_tmp['info_level'] == info_level]
+def load_info(df_slected, info_level, page_list):
+    df_info_level = df_slected[df_slected['info_level'] == info_level]
+    filtered_df_info_level = df_info_level[df_info_level['page'].isin(page_list)]
     updated_contents = {}
 
     update_bool = st.button('Update '+info_level)
         
-    for idx, row in df_info_level.iterrows():
+    for idx, row in filtered_df_info_level.iterrows():
         updated_contents[idx] = st.text_area(label=str(row['page'])+' - '+row['label'], 
         value=row['content'], key=f"content{idx}", height=60)
 
@@ -59,22 +59,28 @@ def load_info(selected_pptx, info_level):
     # container.markdown('</div>', unsafe_allow_html=True)
 
 def main():
-    show_home = st.sidebar.checkbox("ホームを表示")
-    show_data = st.sidebar.checkbox("データ表示を表示")
-    show_settings = st.sidebar.checkbox("設定を表示")
     st.title('PDF Viewer from Local Files')
     selected_pptx = st.selectbox("Select material", [""]+file_list)
+    df_slected = df[df['file_name'] == selected_pptx]
+
+    st.sidebar.markdown('### Page List')
+    page_list = sorted(set(df_slected['page']))
+    for page_num in sorted(set(df_slected['page'])):
+        if not st.sidebar.checkbox(f'page {page_num}'):
+            page_list.remove(page_num)
+
     filename, ext = os.path.splitext(selected_pptx)
+    
     
     if selected_pptx != "":
         view_pdf(filename)
         col1, col2 = st.columns(2)
         with col1:
             st.markdown('### Client Infomation')
-            load_info(selected_pptx, 'client')
+            load_info(df_slected, 'client', page_list)
         with col2:
             st.markdown('### Proposal Infomation')
-            load_info(selected_pptx, 'proposal')
+            load_info(df_slected, 'proposal', page_list)
         
 if __name__ == "__main__":
     main()
