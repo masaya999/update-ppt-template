@@ -8,8 +8,13 @@ pandas = "*"
 flask = "*"
 python-pptx = "*"
 reportlab = "*"
+langchain = "*"
+langchain-openai = "*"
+jupyterlab = "*"
+beautifulsoup4 = "*"
+faiss-cpu = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
