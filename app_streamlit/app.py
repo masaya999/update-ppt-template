@@ -30,15 +30,14 @@ def load_info(df_slected, info_level, page_list):
     updated_contents = {}
 
     update_bool = st.button('Update '+info_level)
-        
-    for idx, row in filtered_df_info_level.iterrows():
-        if info_level == 'proposal':
-            if updated_assistant_bool:
+    with st.container(height=300):    
+        for idx, row in filtered_df_info_level.iterrows():
+            if info_level == 'proposal' and updated_assistant_bool:
                 updated_contents[idx] = st.text_area(label=str(row['page'])+' - '+row['label'], 
-        value=row['content']+'\n>>> '+df_assistant.loc[idx, 'content'], key=f"content{idx}", height=60)
-        else:
-            updated_contents[idx] = st.text_area(label=str(row['page'])+' - '+row['label'], 
-        value=row['content'], key=f"content{idx}", height=60)
+            value=row['content']+'\n>>> '+df_assistant.loc[idx, 'content'], key=f"content{idx}", height=60)
+            else:
+                updated_contents[idx] = st.text_area(label=str(row['page'])+' - '+row['label'], 
+            value=row['content'], key=f"content{idx}", height=60)
 
     if update_bool:
         for idx, content in updated_contents.items():
@@ -87,7 +86,7 @@ def main():
         view_pdf(filename)
         if st.button('Assistant'):
             with st.spinner('Generate Proposal Infomation...'):
-                df_assistant = completion_with_llm(df)
+                df_assistant = completion_with_llm(df_slected)
                 updated_assistant_bool = True
         col1, col2 = st.columns(2)
         with col1:
